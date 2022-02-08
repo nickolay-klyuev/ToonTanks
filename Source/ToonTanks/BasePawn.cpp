@@ -11,37 +11,22 @@ ABasePawn::ABasePawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleCollider"));
 	RootComponent = CapsuleComp;
 
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	BaseMesh->SetupAttachment(CapsuleComp);
 
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
+	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
 	TurretMesh->SetupAttachment(BaseMesh);
 
 	ProjectileSpawnPoint = CreateAbstractDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
-// Called when the game starts or when spawned
-void ABasePawn::BeginPlay()
+void ABasePawn::RotateTurret(FVector Target)
 {
-	Super::BeginPlay();
-	
+	FVector ToTarget = Target - TurretMesh->GetComponentLocation();
+	FRotator RotateToTarget = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
+	TurretMesh->SetWorldRotation(RotateToTarget);
 }
-
-// Called every frame
-void ABasePawn::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
