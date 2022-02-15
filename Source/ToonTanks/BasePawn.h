@@ -17,6 +17,7 @@ public:
 
 protected:
 	void RotateTurret(FVector Target);
+	void Fire();
 
 private:
 	UPROPERTY(EditDefaultsOnly)
@@ -26,5 +27,8 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* TurretMesh;
 	UPROPERTY(EditDefaultsOnly)
-	USceneComponent* ProjectileSpawnPoint;	
+	USceneComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectile> ProjectileClass;
 };

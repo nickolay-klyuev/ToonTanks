@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Projectile.h"
 
 
 // Sets default values
@@ -29,4 +30,12 @@ void ABasePawn::RotateTurret(FVector Target)
 	FVector ToTarget = Target - TurretMesh->GetComponentLocation();
 	FRotator RotateToTarget = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
 	TurretMesh->SetWorldRotation(RotateToTarget);
+}
+
+void ABasePawn::Fire()
+{
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileClass, 
+		ProjectileSpawnPoint->GetComponentLocation(), 
+		ProjectileSpawnPoint->GetComponentRotation());
 }
