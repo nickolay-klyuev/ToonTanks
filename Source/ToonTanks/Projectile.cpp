@@ -30,6 +30,11 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 	
 	Mesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+	if (LaunchSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
+	}
 }
 
 // Called every frame
@@ -58,6 +63,17 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		{
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticles, GetTransform());
 		}
+
+		if (HitSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		}
+
+		if (HitCameraShake)
+		{
+			GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(HitCameraShake);
+		}
 	}
+
 	Destroy();
 }

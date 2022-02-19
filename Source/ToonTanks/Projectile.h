@@ -40,4 +40,12 @@ private:
 	class UParticleSystem* HitParticles;
 	UPROPERTY(VisibleAnywhere)
 	class UParticleSystemComponent* TrailParticlesComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+	class USoundBase* LaunchSound;
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+	USoundBase* HitSound;
+
+	UPROPERTY(EditAnywhere, Category = "Camera")
+	TSubclassOf<UCameraShakeBase> HitCameraShake;
 };
